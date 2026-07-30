@@ -1,0 +1,6 @@
+{
+  "name": "Forgio - Wood Fired Artisan Pizza",
+  "description": "A luxury Awwwards-style artisan pizza restaurant landing page with cinematic food presentation and smooth animations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
