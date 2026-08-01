@@ -1,0 +1,29 @@
+# Ignored folders
+video/
+public/video/
+src/assets/video/
+*.mp4
+*.webm
+
+# Dependencies
+node_modules/
+
+# Build artifacts
+dist/
+dist-ssr/
+*.local
+
+# Logs and Environment
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

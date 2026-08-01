@@ -1,0 +1,31 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { useState } from 'react';
+import { PRODUCTS_CATALOG } from '../data/boconceptData';
+import { Heart, Eye } from 'lucide-react';
+export const ProductCatalog = ({ selectedCategory, onSelectCategory, onQuickViewProduct, onScrollToConfigurator }) => {
+    const [wishlist, setWishlist] = useState([]);
+    const filteredProducts = selectedCategory === 'all'
+        ? PRODUCTS_CATALOG
+        : PRODUCTS_CATALOG.filter(p => p.category === selectedCategory);
+    const toggleWishlist = (id, e) => {
+        e.stopPropagation();
+        setWishlist(prev => prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]);
+    };
+    return (_jsx("section", { id: "catalog", className: "py-20 bg-[#FAF8F5]", children: _jsxs("div", { className: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8", children: [_jsxs("div", { className: "flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6 border-b border-[#E6DDD4] pb-8", children: [_jsxs("div", { children: [_jsx("span", { className: "text-xs font-mono uppercase tracking-widest text-[#B0977B] block mb-2 font-semibold", children: "Danish Furniture Collection" }), _jsx("h2", { className: "font-serif text-3xl sm:text-5xl font-light text-[#171615]", children: "Timeless Scandinavian Design" })] }), _jsx("div", { className: "flex flex-wrap gap-2", children: [
+                                { id: 'all', label: 'All Designs' },
+                                { id: 'sofas', label: 'Sofas' },
+                                { id: 'armchairs', label: 'Armchairs' },
+                                { id: 'tables', label: 'Tables' },
+                                { id: 'storage', label: 'Storage' },
+                                { id: 'lighting', label: 'Lighting' },
+                                { id: 'outdoor', label: 'Outdoor' }
+                            ].map((cat) => (_jsx("button", { onClick: () => onSelectCategory(cat.id), className: `px-4 py-2 text-xs font-semibold uppercase tracking-wider transition-all ${selectedCategory === cat.id
+                                    ? 'bg-[#171615] text-[#FAF8F5]'
+                                    : 'bg-[#F4EFEA] text-[#171615] hover:bg-[#E6DDD4]'}`, children: cat.label }, cat.id))) })] }), _jsx("div", { className: "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8", children: filteredProducts.map((product) => {
+                        const isWishlisted = wishlist.includes(product.id);
+                        return (_jsxs("div", { onClick: () => onQuickViewProduct(product), className: "group cursor-pointer bg-[#F4EFEA] border border-[#E6DDD4] flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full", children: [_jsxs("div", { className: "relative w-full aspect-[4/3] h-48 sm:h-56 overflow-hidden bg-[#E6DDD4]/40", style: { aspectRatio: '4/3' }, children: [_jsx("img", { src: product.images[0], alt: product.name, className: "w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" }), product.images[1] && (_jsx("img", { src: product.images[1], alt: `${product.name} detail`, className: "w-full h-full object-cover object-center absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" })), _jsxs("div", { className: "absolute top-3 left-3 flex flex-col gap-1 z-10", children: [product.bestseller && (_jsx("span", { className: "bg-[#171615] text-white text-[9px] uppercase font-bold tracking-widest px-2 py-1", children: "Bestseller" })), product.featured && (_jsx("span", { className: "bg-[#C5A059] text-white text-[9px] uppercase font-bold tracking-widest px-2 py-1", children: "Iconic" }))] }), _jsx("button", { onClick: (e) => toggleWishlist(product.id, e), className: "absolute top-3 right-3 p-2 bg-[#FAF8F5]/80 backdrop-blur-md hover:bg-white transition-colors z-10 rounded-full", "aria-label": "Wishlist", children: _jsx(Heart, { className: `w-4 h-4 transition-colors ${isWishlisted ? 'fill-[#B85B43] text-[#B85B43]' : 'text-[#171615]'}` }) }), _jsx("div", { className: "absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/60 to-transparent translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex items-center justify-center", children: _jsxs("button", { onClick: (e) => {
+                                                    e.stopPropagation();
+                                                    onQuickViewProduct(product);
+                                                }, className: "w-full py-2.5 bg-white text-[#171615] text-xs uppercase font-semibold tracking-wider hover:bg-[#C5A059] hover:text-white transition-colors flex items-center justify-center gap-2", children: [_jsx(Eye, { className: "w-3.5 h-3.5" }), " Quick View & Customise"] }) })] }), _jsxs("div", { className: "p-5 flex-1 flex flex-col justify-between gap-4", children: [_jsxs("div", { children: [_jsx("span", { className: "text-[10px] uppercase font-mono tracking-widest text-[#B0977B] font-semibold", children: product.designer }), _jsx("h3", { className: "font-serif text-xl font-bold text-[#171615] group-hover:text-[#B0977B] transition-colors mt-0.5 leading-snug", children: product.name }), _jsx("p", { className: "text-xs text-[#171615]/70 line-clamp-2 font-light mt-1.5 leading-relaxed", children: product.description })] }), _jsxs("div", { className: "pt-3 border-t border-[#E6DDD4] flex items-center justify-between mt-auto", children: [_jsxs("div", { children: [_jsx("span", { className: "text-[10px] text-gray-500 uppercase font-mono block", children: "From" }), _jsxs("span", { className: "font-serif text-lg font-semibold text-[#171615]", children: ["$", product.basePrice.toLocaleString()] })] }), _jsxs("div", { className: "flex items-center -space-x-1", children: [product.swatches.slice(0, 4).map((sw) => (_jsx("span", { className: "w-3.5 h-3.5 rounded-full border border-white shadow-sm", style: { backgroundColor: sw.texture }, title: sw.name }, sw.id))), product.swatches.length > 4 && (_jsxs("span", { className: "text-[9px] font-mono text-gray-500 ml-2", children: ["+", product.swatches.length - 4] }))] })] })] })] }, product.id));
+                    }) })] }) }));
+};
