@@ -24,12 +24,21 @@ export const Hero: React.FC<HeroProps> = ({ onQuickOrder }) => {
     }
   }
 
-  // Pre-load images in background
+  // Pre-load images progressively in batches to avoid overwhelming Chrome network queue
   useEffect(() => {
-    imagePaths.current.forEach((path) => {
-      const img = new Image();
-      img.src = path;
-    });
+    let index = 0;
+    const paths = imagePaths.current;
+    const loadBatch = () => {
+      const batchSize = 10;
+      for (let i = 0; i < batchSize && index < paths.length; i++, index++) {
+        const img = new Image();
+        img.src = paths[index];
+      }
+      if (index < paths.length) {
+        setTimeout(loadBatch, 60);
+      }
+    };
+    loadBatch();
   }, []);
 
   // Desktop scroll listener
