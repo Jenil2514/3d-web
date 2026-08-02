@@ -69,3 +69,41 @@
 .animate-ping-slow {
   animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
+
+/* Staggered Entrance Animations for Architectural Projects Gallery */
+@keyframes projectCardReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.92);
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 0.8;
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes ghostReveal {
+  0% {
+    opacity: 0.7;
+    background-color: rgba(13, 148, 136, 0.25);
+  }
+  100% {
+    opacity: 0;
+    background-color: transparent;
+  }
+}
+
+.animate-project-reveal {
+  animation: projectCardReveal 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-ghost-reveal {
+  animation: ghostReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+

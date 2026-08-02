@@ -60,6 +60,7 @@ export const Header: React.FC<HeaderProps> = ({
               <button onClick={() => onSelectCategory('sofas')} className="hover:text-[#B0977B] transition-colors">Sofas</button>
               <button onClick={() => onSelectCategory('armchairs')} className="hover:text-[#B0977B] transition-colors">Armchairs</button>
               <button onClick={() => onSelectCategory('tables')} className="hover:text-[#B0977B] transition-colors">Tables</button>
+              <a href="#projects" className="hover:text-[#0D9488] font-bold text-[#0D9488] transition-colors">Projects</a>
               <a href="#room-hotspots" className="hover:text-[#B0977B] transition-colors text-[#B0977B]">Shop The Room</a>
             </nav>
           </div>

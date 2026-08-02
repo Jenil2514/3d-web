@@ -110,6 +110,15 @@ export const SideNavigationDrawer: React.FC<SideNavigationDrawerProps> = ({
                     <ChevronRight className="w-5 h-5 text-[#171615]/40 group-hover:text-[#B0977B] group-hover:translate-x-1 transition-all" />
                   </button>
 
+                  <a
+                    href="#projects"
+                    onClick={() => onClose()}
+                    className="w-full flex items-center justify-between py-2 text-left hover:text-[#0D9488] font-medium transition-colors text-[#0D9488]"
+                  >
+                    <span>Projects</span>
+                    <ChevronRight className="w-5 h-5 text-[#0D9488]" />
+                  </a>
+
                   <button
                     onClick={() => handleCategoryClick('all')}
                     className="w-full flex items-center justify-between py-2 text-left hover:text-[#B0977B] transition-colors"

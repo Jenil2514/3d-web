@@ -54,10 +54,10 @@ export const RoomHotspots: React.FC<RoomHotspotsProps> = ({ onQuickViewProduct }
         </div>
 
         {/* Room Visual Canvas & Hotspot Pins */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full">
           
           {/* Room Image Canvas (8 Cols) */}
-          <div className="lg:col-span-8 relative aspect-16/10 sm:aspect-16/9 overflow-hidden bg-black rounded-none border border-white/10 group">
+          <div className="lg:col-span-8 relative w-full min-w-0 aspect-[16/10] sm:aspect-[16/9] overflow-hidden bg-black rounded-none border border-white/10 group">
             <img
               src={scene.image}
               alt={scene.title}
@@ -65,7 +65,7 @@ export const RoomHotspots: React.FC<RoomHotspotsProps> = ({ onQuickViewProduct }
             />
             
             {/* Dark Vignette Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/20 pointer-events-none" />
 
             {/* Hotspot Pins */}
             {scene.hotspots.map((hs) => {
@@ -93,7 +93,7 @@ export const RoomHotspots: React.FC<RoomHotspotsProps> = ({ onQuickViewProduct }
             })}
 
             {/* Bottom Caption Bar */}
-            <div className="absolute bottom-4 left-4 right-4 p-4 bg-black/60 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs">
+            <div className="absolute bottom-4 left-4 right-4 p-4 bg-black/70 backdrop-blur-md border border-white/10 flex items-center justify-between text-xs z-10">
               <div>
                 <h4 className="font-serif text-lg text-white font-medium">{scene.title}</h4>
                 <p className="text-white/60 font-light">{scene.subtitle}</p>
@@ -106,7 +106,7 @@ export const RoomHotspots: React.FC<RoomHotspotsProps> = ({ onQuickViewProduct }
           </div>
 
           {/* Hotspot Product Preview Card (4 Cols) */}
-          <div className="lg:col-span-4 bg-[#232220] p-6 border border-white/10 flex flex-col justify-between">
+          <div className="lg:col-span-4 w-full min-w-0 bg-[#232220] p-6 border border-white/10 flex flex-col justify-between">
             {activeHotspot ? (
               <div className="space-y-6 animate-in fade-in duration-300">
                 
@@ -120,7 +120,7 @@ export const RoomHotspots: React.FC<RoomHotspotsProps> = ({ onQuickViewProduct }
                 </div>
 
                 {/* Image */}
-                <div className="aspect-4/3 overflow-hidden bg-black/40 border border-white/10">
+                <div className="aspect-[4/3] w-full overflow-hidden bg-black/40 border border-white/10">
                   <img
                     src={activeHotspot.image}
                     alt={activeHotspot.title}

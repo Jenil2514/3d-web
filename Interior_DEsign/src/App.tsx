@@ -15,6 +15,7 @@ import { FreeSwatchesDrawer } from './components/FreeSwatchesDrawer';
 import { StoreLocatorModal } from './components/StoreLocatorModal';
 import { CartDrawer } from './components/CartDrawer';
 import { SideNavigationDrawer } from './components/SideNavigationDrawer';
+import { ProjectsGallery } from './components/ProjectsGallery';
 import { Footer } from './components/Footer';
 
 export function App() {
@@ -175,6 +176,12 @@ export function App() {
           onSelectCategory={(cat) => setSelectedCategory(cat)}
           onQuickViewProduct={(prod) => setQuickViewProduct(prod)}
           onScrollToConfigurator={scrollToConfigurator}
+        />
+
+        {/* Architectural & Interior Projects Gallery */}
+        <ProjectsGallery
+          onQuickViewProduct={(prod) => setQuickViewProduct(prod)}
+          onOpenConsultation={() => setIsConsultationOpen(true)}
         />
 
         {/* Danish Design & FAQ Accordion Section */}

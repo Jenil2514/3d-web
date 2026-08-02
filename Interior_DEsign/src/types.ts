@@ -72,3 +72,21 @@ export interface DesignServiceBooking {
   preferredDate: string;
   notes?: string;
 }
+
+export type MainProjectCategory = 'all' | 'architecture' | 'interiors';
+
+export interface ProjectItem {
+  id: string;
+  title: string;
+  location: string;
+  mainCategory: 'architecture' | 'interiors';
+  subCategory: string; // 'residential', 'new-buildings', 'commercial', 'retail-hospitality', 'lofts', 'townhouses', 'apartments', 'houses'
+  image: string;
+  galleryImages: string[];
+  description: string;
+  year?: string;
+  area?: string;
+  architect?: string;
+  featuredFurnitureIds?: string[];
+}
+
