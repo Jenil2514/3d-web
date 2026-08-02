@@ -1,0 +1,21 @@
+# Dependencies
+/node_modules
+
+# Raw video and heavy frame source files
+video/
+video
+
+# Build outputs
+dist/
+
+# Python cache & helper scripts
+__pycache__/
+*.pyc
+convert_frames.py
+update_branding.py
+
+# System & IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

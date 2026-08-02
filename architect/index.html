@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JHG | Architecture & Interior Design</title>
+    <meta name="description" content="JHG is a premier architecture and interior design firm specializing in luxury residential, commercial, lofts, townhouses, and bespoke architectural spaces.">
+    <meta name="keywords" content="JHG, Architecture, Interior Design, Luxury Residential, Commercial Buildings, Townhouses, Lofts, Modern Architecture">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- GSAP & ScrollTrigger Animation Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header Navigation Bar (Inspired by Image 1) -->
+    <header class="site-header" id="mainHeader">
+        <div class="header-container">
+            <div class="header-left">
+                <a href="#home" class="nav-sub-link active">HOME</a>
+            </div>
+
+            <div class="header-brand">
+                <a href="#home" class="brand-logo">JHG</a>
+            </div>
+
+            <nav class="header-nav">
+                <ul class="nav-list">
+                    <li><a href="#scroll-3d" class="nav-link">3D EXPERIENCE</a></li>
+                    <li><a href="#projects" class="nav-link">PROJECTS</a></li>
+                    <li><a href="#about" class="nav-link">ABOUT</a></li>
+                    <li><a href="#testimonials" class="nav-link">WHAT OUR CLIENTS SAY</a></li>
+                    <li><a href="#media" class="nav-link">MEDIA</a></li>
+                    <li><a href="#contact" class="nav-link">CONTACT</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-right">
+                <button class="search-toggle-btn" id="searchToggle" aria-label="Open Search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+                <a href="tel:2123894020" class="phone-link">(212) 389-4020</a>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Mobile Menu">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-nav-drawer" id="mobileDrawer">
+        <div class="mobile-drawer-header">
+            <div class="brand-logo">JHG</div>
+            <button class="close-drawer-btn" id="closeDrawerBtn">&times;</button>
+        </div>
+        <ul class="mobile-nav-list">
+            <li><a href="#home" class="mobile-nav-link">HOME</a></li>
+            <li><a href="#scroll-3d" class="mobile-nav-link">3D EXPERIENCE</a></li>
+            <li><a href="#projects" class="mobile-nav-link">PROJECTS</a></li>
+            <li><a href="#mosaic-gallery" class="mobile-nav-link">FEATURED MOSAIC</a></li>
+            <li><a href="#about" class="mobile-nav-link">ABOUT</a></li>
+            <li><a href="#testimonials" class="mobile-nav-link">WHAT OUR CLIENTS SAY</a></li>
+            <li><a href="#media" class="mobile-nav-link">MEDIA</a></li>
+            <li><a href="#contact" class="mobile-nav-link">CONTACT</a></li>
+        </ul>
+        <div class="mobile-drawer-footer">
+            <a href="tel:2123894020" class="phone-link-mobile"><i class="fa-solid fa-phone"></i> (212) 389-4020</a>
+            <p>ARCHITECTURE AND INTERIOR DESIGN</p>
+        </div>
+    </div>
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+
+    <!-- Search Modal Overlay -->
+    <div class="search-modal" id="searchModal">
+        <div class="search-container">
+            <button class="close-search-btn" id="closeSearchBtn">&times;</button>
+            <h3>SEARCH PROJECTS & MEDIA</h3>
+            <div class="search-input-wrapper">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Type to search (e.g. Hamptons, Loft, Commercial, Award)..." autofocus>
+            </div>
+            <div class="search-results" id="searchResults">
+                <!-- Dynamic search results populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Auto-Sliding Header Section (Inspired by Image 1) -->
+    <section class="hero-slider-section" id="home">
+        <div class="hero-slider-wrapper" id="heroSlider">
+            <!-- Slide 1 -->
+            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1920&auto=format&fit=crop');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <span class="hero-badge">FEATURED ARCHITECTURE</span>
+                    <h1 class="hero-title">GLASS HARBOR HIDEAWAY</h1>
+                    <p class="hero-subtitle">Modernist Waterfront Residence in Sag Harbor, NY</p>
+                    <a href="#projects" class="hero-btn" onclick="openProjectDetail('p1')">EXPLORE PROJECT <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=1920&auto=format&fit=crop');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <span class="hero-badge">LUXURY INTERIORS</span>
+                    <h1 class="hero-title">FLATIRON TRIPLEX</h1>
+                    <p class="hero-subtitle">Bespoke Urban Loft & Sky Garden in New York City</p>
+                    <a href="#projects" class="hero-btn" onclick="openProjectDetail('p2')">EXPLORE PROJECT <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1920&auto=format&fit=crop');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <span class="hero-badge">MOUNTAIN SANCTUARY</span>
+                    <h1 class="hero-title">MOUNTAIN HOUSE - ALTA</h1>
+                    <p class="hero-subtitle">Contemporary Alpine retreat integrated with natural rock formations</p>
+                    <a href="#projects" class="hero-btn" onclick="openProjectDetail('p3')">EXPLORE PROJECT <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </div>
+            <!-- Slide 4 -->
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1920&auto=format&fit=crop');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <span class="hero-badge">COMMERCIAL INNOVATION</span>
+                    <h1 class="hero-title">HUDSON YARDS TOWER</h1>
+                    <p class="hero-subtitle">Sustainable Commercial & Hospitality Headquarters</p>
+                    <a href="#projects" class="hero-btn" onclick="openProjectDetail('p4')">EXPLORE PROJECT <i class="fa-solid fa-arrow-right-long"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slider Navigation Controls -->
+        <button class="slider-arrow prev-arrow" id="sliderPrev" aria-label="Previous Slide"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="slider-arrow next-arrow" id="sliderNext" aria-label="Next Slide"><i class="fa-solid fa-chevron-right"></i></button>
+
+        <div class="slider-dots" id="sliderDots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+            <span class="dot" data-slide="3"></span>
+        </div>
+
+        <div class="hero-footer-bar">
+            <span class="copyright-tag">© JHG / ALL RIGHTS RESERVED.</span>
+            <span class="subtext-tag">ARCHITECTURE AND INTERIOR DESIGN</span>
+        </div>
+    </section>
+
+    <!-- Scroll-Linked 3D Frame Animation Track Section (Just below Hero Slider) -->
+    <section class="scroll-3d-section" id="scroll-3d">
+        <div class="scroll-3d-sticky-container" id="scroll3dSticky">
+            <canvas id="scroll3dCanvas" class="scroll-3d-canvas"></canvas>
+            <div class="canvas-gradient-overlay top"></div>
+            <div class="canvas-gradient-overlay bottom"></div>
+
+            <!-- Content Spacing Overlay: Open Channels for Text Cards -->
+            <div class="scroll-story-container">
+                <div class="story-card story-card-left" id="storyCard1">
+                    <span class="story-tag"><i class="fa-solid fa-cube"></i> VOLUMETRIC SYNTHESIS</span>
+                    <h3>PARAMETRIC FORM DISCLOSURE</h3>
+                    <p>Scroll down to reveal structural evolution, from foundation grid to high-definition interior spaces.</p>
+                </div>
+
+                <div class="story-card story-card-right" id="storyCard2">
+                    <span class="story-tag"><i class="fa-solid fa-lightbulb"></i> MATERIAL HARMONY</span>
+                    <h3>LIGHT & GEOMETRY IN MOTION</h3>
+                    <p>Observe daylight shifts across steel, glass, and reclaimed cedar framing in continuous motion.</p>
+                </div>
+
+                <div class="story-card story-card-left" id="storyCard3">
+                    <span class="story-tag"><i class="fa-solid fa-award"></i> TURNKEY REFINEMENT</span>
+                    <h3>CRAFTED FOR GENERATIONS</h3>
+                    <p>Precision architectural engineering tailored to environmental surroundings and human experience.</p>
+                </div>
+            </div>
+
+            <!-- Loader Indicator -->
+            <div class="scroll-3d-loader" id="scroll3dLoader">
+                <div class="loader-spinner"></div>
+                <span class="loader-text" id="loaderText">Preloading 3D Frame Sequence (0%)</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Mosaic Gallery Section (Inspired by Image 3 - Colorful with Hover Text) -->
+    <section class="mosaic-section" id="mosaic-gallery">
+        <div class="section-container">
+            <div class="section-header center">
+                <span class="section-subtitle">FEATURED PORTFOLIO</span>
+                <h2 class="section-title">ARCHITECTURAL DESIGN MOSAIC</h2>
+                <div class="title-underline"></div>
+                <p class="section-desc">Experience our signature work presented in vibrant, colorful high-definition photography with interactive design details.</p>
+            </div>
+
+            <!-- Asymmetric Bento Box Grid Layout (Image 3 inspired) -->
+            <div class="mosaic-grid">
+                <!-- Large Featured Item Left -->
+                <div class="mosaic-item mosaic-large" onclick="openProjectDetail('p1')">
+                    <div class="mosaic-img-box">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="Glass Harbor Hideaway" loading="lazy">
+                    </div>
+                    <div class="mosaic-badge">RESIDENTIAL EXCELLENCE</div>
+                    <div class="mosaic-hover-overlay">
+                        <div class="mosaic-content">
+                            <span class="mosaic-cat">SAG HARBOR, NY</span>
+                            <h3 class="mosaic-title">Glass Harbor Hideaway</h3>
+                            <p class="mosaic-excerpt">Cantilevered glass pavilion seamlessly fusing indoor living spaces with poolside nature.</p>
+                            <span class="mosaic-link">VIEW CASE STUDY <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Right Process Info Box -->
+                <div class="mosaic-item mosaic-info-card">
+                    <div class="info-card-inner">
+                        <div class="info-icon"><i class="fa-solid fa-compass-drafting"></i></div>
+                        <h3>Architecture Process</h3>
+                        <p class="subtitle-italics">A Step-By-Step Guide</p>
+                        <ul class="process-list">
+                            <li><span class="step-num">01</span> Conceptual Sketching & Site Context Analysis</li>
+                            <li><span class="step-num">02</span> 3D Visualization & Material Palette Selection</li>
+                            <li><span class="step-num">03</span> Structural Precision & Regulatory Compliance</li>
+                            <li><span class="step-num">04</span> Meticulous Interior Fit-out & Turnkey Handover</li>
+                        </ul>
+                        <a href="#contact" class="info-btn">SCHEDULE CONSULTATION</a>
+                    </div>
+                </div>
+
+                <!-- Bottom Right Item -->
+                <div class="mosaic-item mosaic-medium" onclick="openProjectDetail('p5')">
+                    <div class="mosaic-img-box">
+                        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop" alt="Concealed Cottage" loading="lazy">
+                    </div>
+                    <div class="mosaic-hover-overlay">
+                        <div class="mosaic-content">
+                            <span class="mosaic-cat">ART COLLECTORS GUESTHOUSE</span>
+                            <h3 class="mosaic-title">Concealed Cottage</h3>
+                            <p class="mosaic-excerpt">Invisible sunken guesthouse featuring subterranean art galleries and cedar screening.</p>
+                            <span class="mosaic-link">EXPLORE DETAILS <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Extra Mosaic Row Items for Visual Richness -->
+                <div class="mosaic-item mosaic-small" onclick="openProjectDetail('p6')">
+                    <div class="mosaic-img-box">
+                        <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=1200&auto=format&fit=crop" alt="North Moore Loft" loading="lazy">
+                    </div>
+                    <div class="mosaic-hover-overlay">
+                        <div class="mosaic-content">
+                            <span class="mosaic-cat">TRIBECA, NYC</span>
+                            <h3 class="mosaic-title">North Moore Loft</h3>
+                            <p class="mosaic-excerpt">Restored historic brick loft with double-height ceiling voids.</p>
+                            <span class="mosaic-link">DISCOVER MORE <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item mosaic-small" onclick="openProjectDetail('p7')">
+                    <div class="mosaic-img-box">
+                        <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=1200&auto=format&fit=crop" alt="Newport Coast House" loading="lazy">
+                    </div>
+                    <div class="mosaic-hover-overlay">
+                        <div class="mosaic-content">
+                            <span class="mosaic-cat">COASTAL VILLA</span>
+                            <h3 class="mosaic-title">Newport Coast House</h3>
+                            <p class="mosaic-excerpt">Panoramic Pacific ocean vista home with limestone terraces.</p>
+                            <span class="mosaic-link">DISCOVER MORE <i class="fa-solid fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section with Category Sidebar (Inspired by Image 2) -->
+    <section class="projects-section" id="projects">
+        <div class="section-container">
+            <div class="section-header">
+                <div>
+                    <span class="section-subtitle">OUR WORKS</span>
+                    <h2 class="section-title">PROJECT PORTFOLIO</h2>
+                </div>
+                <p class="section-desc">Browse our architectural masterworks organized by domain and interior typology. Click any project for complete blueprints, specifications, and gallery photos.</p>
+            </div>
+
+            <div class="projects-layout">
+                <!-- Left Sidebar Category Filters (Image 2 inspired layout) -->
+                <aside class="projects-sidebar">
+                    <div class="sidebar-category-group">
+                        <h3 class="sidebar-heading">ARCHITECTURE</h3>
+                        <ul class="category-menu">
+                            <li><button class="cat-btn active" data-filter="all">ALL PROJECTS <span class="count-badge">12</span></button></li>
+                            <li><button class="cat-btn" data-filter="residential">RESIDENTIAL <i class="fa-solid fa-chevron-right"></i></button></li>
+                            <li><button class="cat-btn" data-filter="new-buildings">NEW BUILDINGS <i class="fa-solid fa-chevron-right"></i></button></li>
+                            <li><button class="cat-btn" data-filter="commercial">COMMERCIAL <i class="fa-solid fa-chevron-right"></i></button></li>
+                            <li><button class="cat-btn" data-filter="retail-hospitality">RETAIL & HOSPITALITY <i class="fa-solid fa-chevron-right"></i></button></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-category-group">
+                        <h3 class="sidebar-heading">INTERIORS</h3>
+                        <ul class="category-menu">
+                            <li><button class="cat-btn" data-filter="lofts">LOFTS <i class="fa-solid fa-chevron-right"></i></button></li>
+                            <li><button class="cat-btn" data-filter="townhouses">TOWNHOUSES <i class="fa-solid fa-chevron-right"></i></button></li>
+                            <li><button class="cat-btn" data-filter="apartments">APARTMENTS <i class="fa-solid fa-chevron-right"></i></button></li>
+                            <li><button class="cat-btn" data-filter="houses">HOUSES <i class="fa-solid fa-chevron-right"></i></button></li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <!-- Right Projects Grid -->
+                <main class="projects-grid-wrapper">
+                    <div class="projects-grid" id="projectsGrid">
+                        <!-- Project Card 1 -->
+                        <div class="project-card" data-category="residential new-buildings houses" data-id="p1" onclick="openProjectDetail('p1')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" alt="Glass Harbor Hideaway" loading="lazy">
+                                <div class="card-tag">RESIDENTIAL</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">GLASS HARBOR HIDEAWAY</h4>
+                                <span class="project-location">Sag Harbor, NY</span>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 2 -->
+                        <div class="project-card" data-category="residential new-buildings houses" data-id="p3" onclick="openProjectDetail('p3')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="Mountain House - Alta" loading="lazy">
+                                <div class="card-tag">NEW BUILDINGS</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">MOUNTAIN HOUSE – ALTA, UTAH</h4>
+                                <span class="project-location">Alta, Utah</span>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 3 -->
+                        <div class="project-card" data-category="interiors lofts apartments" data-id="p2" onclick="openProjectDetail('p2')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop" alt="Flatiron Triplex" loading="lazy">
+                                <div class="card-tag">INTERIORS</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">FLATIRON TRIPLEX</h4>
+                                <span class="project-location">Flatiron District, NYC</span>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 4 -->
+                        <div class="project-card" data-category="interiors lofts" data-id="p6" onclick="openProjectDetail('p6')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=800&auto=format&fit=crop" alt="North Moore Loft" loading="lazy">
+                                <div class="card-tag">LOFTS</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">NORTH MOORE LOFT</h4>
+                                <span class="project-location">Tribeca, NYC</span>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 5 -->
+                        <div class="project-card" data-category="residential new-buildings houses" data-id="p8" onclick="openProjectDetail('p8')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800&auto=format&fit=crop" alt="Dower House" loading="lazy">
+                                <div class="card-tag">RESIDENTIAL</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">DOWER HOUSE</h4>
+                                <span class="project-location">Litchfield County, CT</span>
+                            </div>
+                        </div>
+
+                        <!-- Project Card 6 -->
+                        <div class="project-card" data-category="residential houses" data-id="p9" onclick="openProjectDetail('p9')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=800&auto=format&fit=crop" alt="Hamptons Beach House" loading="lazy">
+                                <div class="card-tag">HOUSES</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">HAMPTONS BEACH HOUSE</h4>
+                                <span class="project-location">East Hampton, NY</span>
+                            </div>
+                        </div>
+
+                        <!-- Additional Cards (Hidden initially or loaded via View More) -->
+                        <div class="project-card extra-project" data-category="residential houses" data-id="p7" onclick="openProjectDetail('p7')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1600585152220-90363fe7e115?q=80&w=800&auto=format&fit=crop" alt="Newport Coast House" loading="lazy">
+                                <div class="card-tag">RESIDENTIAL</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">NEWPORT COAST HOUSE</h4>
+                                <span class="project-location">Newport Coast, CA</span>
+                            </div>
+                        </div>
+
+                        <div class="project-card extra-project" data-category="interiors apartments" data-id="p10" onclick="openProjectDetail('p10')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop" alt="Sullivan Street Residence" loading="lazy">
+                                <div class="card-tag">APARTMENTS</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">SULLIVAN STREET RESIDENCE</h4>
+                                <span class="project-location">SoHo, NYC</span>
+                            </div>
+                        </div>
+
+                        <div class="project-card extra-project" data-category="commercial retail-hospitality" data-id="p4" onclick="openProjectDetail('p4')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=800&auto=format&fit=crop" alt="Hudson Yards Headquarters" loading="lazy">
+                                <div class="card-tag">COMMERCIAL</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">HUDSON YARDS HEADQUARTERS</h4>
+                                <span class="project-location">Hudson Yards, NYC</span>
+                            </div>
+                        </div>
+
+                        <div class="project-card extra-project" data-category="interiors townhouses" data-id="p11" onclick="openProjectDetail('p11')">
+                            <div class="card-img-holder">
+                                <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?q=80&w=800&auto=format&fit=crop" alt="Brooklyn Heights Townhouse" loading="lazy">
+                                <div class="card-tag">TOWNHOUSES</div>
+                            </div>
+                            <div class="card-meta">
+                                <h4 class="project-name">BROOKLYN HEIGHTS TOWNHOUSE</h4>
+                                <span class="project-location">Brooklyn, NY</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- View More Projects Button -->
+                    <div class="view-more-container">
+                        <button class="view-more-btn" id="viewMoreProjectsBtn">
+                            <span>VIEW MORE PROJECTS</span>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="section-container">
+            <div class="about-grid">
+                <div class="about-text-content">
+                    <span class="section-subtitle">ABOUT JHG ARCHITECTURE</span>
+                    <h2 class="section-title">CRAFTING TIMELSS ARCHITECTURAL LANDMARKS</h2>
+                    <div class="title-underline"></div>
+                    <p class="lead-text">Founded in New York City, JHG is a multidisciplinary architecture and interior design studio dedicated to creating extraordinary residential, commercial, and urban environments.</p>
+                    <p class="body-text">We blend modernist rigor with tactile material warmth. Every project is conceived as a unique dialogue between site topography, light play, structural innovation, and the client's vision.</p>
+                    
+                    <div class="stats-row">
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="25">25+</span>
+                            <span class="stat-label">YEARS OF EXCELLENCE</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="180">180+</span>
+                            <span class="stat-label">COMPLETED PROJECTS</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" data-target="42">42</span>
+                            <span class="stat-label">DESIGN AWARDS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-image-wrapper">
+                    <div class="about-img-frame">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1000&auto=format&fit=crop" alt="JHG Studio Architectural Philosophy">
+                        <div class="experience-badge">
+                            <span class="badge-num">25</span>
+                            <span class="badge-txt">Years of Architectural Vision</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Testimonials Section ("WHAT OUR CLIENTS SAY" from Image 1 Menu) -->
+    <section class="testimonials-section" id="testimonials">
+        <div class="section-container">
+            <div class="section-header center">
+                <span class="section-subtitle">TESTIMONIALS</span>
+                <h2 class="section-title">WHAT OUR CLIENTS SAY</h2>
+                <div class="title-underline"></div>
+            </div>
+
+            <div class="testimonial-slider-container">
+                <div class="testimonial-wrapper" id="testimonialWrapper">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card active">
+                        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                        <p class="testimonial-quote">"Working with JHG on our Flatiron Triplex was an inspiring experience. Their architectural mastery in navigating complex NYC landmark permits while creating a light-filled sanctuary was nothing short of miraculous."</p>
+                        <div class="client-info">
+                            <h4 class="client-name">Marcus & Elena Vance</h4>
+                            <span class="client-role">Owners, Flatiron Triplex Penthouse</span>
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                        <p class="testimonial-quote">"JHG brought unmatched precision and artistic sensibility to our Sag Harbor waterfront residence. The way glass, steel, and timber interact with natural coastal light is stunning every hour of the day."</p>
+                        <div class="client-info">
+                            <h4 class="client-name">Harrison Sterling</h4>
+                            <span class="client-role">Founder, Sterling Fine Art</span>
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                        <p class="testimonial-quote">"From initial spatial studies to final interior detailing, JHG delivered an exceptional corporate headquarters that elevates our team's daily inspiration and reflects our brand's forward-looking ethos."</p>
+                        <div class="client-info">
+                            <h4 class="client-name">Sarah Lin-Alvarez</h4>
+                            <span class="client-role">Managing Principal, Vantage Capital</span>
+                            <div class="stars">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial-controls">
+                    <button class="t-btn" id="tPrev" aria-label="Previous Testimonial"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="t-dots" id="tDots">
+                        <span class="t-dot active" data-t="0"></span>
+                        <span class="t-dot" data-t="1"></span>
+                        <span class="t-dot" data-t="2"></span>
+                    </div>
+                    <button class="t-btn" id="tNext" aria-label="Next Testimonial"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News & Media Section ("MEDIA" from Image 1 Menu) -->
+    <section class="news-section" id="media">
+        <div class="section-container">
+            <div class="section-header">
+                <div>
+                    <span class="section-subtitle">PRESS & PUBLICATIONS</span>
+                    <h2 class="section-title">NEWS & MEDIA</h2>
+                </div>
+                <p class="section-desc">Latest press releases, architectural monograph features, design awards, and upcoming exhibition announcements.</p>
+            </div>
+
+            <div class="news-grid">
+                <!-- News Item 1 -->
+                <article class="news-card" onclick="openNewsModal('n1')">
+                    <div class="news-img-box">
+                        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop" alt="Architectural Digest Feature" loading="lazy">
+                        <span class="news-tag">ARCHITECTURAL DIGEST</span>
+                    </div>
+                    <div class="news-body">
+                        <span class="news-date"><i class="fa-regular fa-calendar"></i> JULY 18, 2026</span>
+                        <h3 class="news-title">JHG Awarded 2026 Architectural Excellence Honor for Glass Harbor Pavilion</h3>
+                        <p class="news-excerpt">The American Institute of Architects recognizes JHG's sustainable waterfront villa for innovation in climate-responsive design.</p>
+                        <span class="read-news-btn">READ ARTICLE <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </article>
+
+                <!-- News Item 2 -->
+                <article class="news-card" onclick="openNewsModal('n2')">
+                    <div class="news-img-box">
+                        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800&auto=format&fit=crop" alt="ELLE Decor Feature" loading="lazy">
+                        <span class="news-tag">ELLE DECOR</span>
+                    </div>
+                    <div class="news-body">
+                        <span class="news-date"><i class="fa-regular fa-calendar"></i> JUNE 04, 2026</span>
+                        <h3 class="news-title">Inside the Tribeca Loft Revolution: Crafting Vertical Gardens in Historic Voids</h3>
+                        <p class="news-excerpt">An exclusive look into JHG's transformative loft redesign combining preserved 19th-century timber beams with modern minimalist spatial fluidity.</p>
+                        <span class="read-news-btn">READ ARTICLE <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </article>
+
+                <!-- News Item 3 -->
+                <article class="news-card" onclick="openNewsModal('n3')">
+                    <div class="news-img-box">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=800&auto=format&fit=crop" alt="Monocle Magazine" loading="lazy">
+                        <span class="news-tag">MONOCLE MAGAZINE</span>
+                    </div>
+                    <div class="news-body">
+                        <span class="news-date"><i class="fa-regular fa-calendar"></i> MAY 12, 2026</span>
+                        <h3 class="news-title">Alpine Modernism: JHG Releases New Monograph on High-Altitude Sanctuaries</h3>
+                        <p class="news-excerpt">Exploring structural resilience and glass integration in mountain homes across Alta, Aspen, and the Swiss Alps.</p>
+                        <span class="read-news-btn">READ ARTICLE <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Consultation Section -->
+    <section class="contact-section" id="contact">
+        <div class="section-container">
+            <div class="contact-grid">
+                <div class="contact-info-col">
+                    <span class="section-subtitle">GET IN TOUCH</span>
+                    <h2 class="section-title">START YOUR ARCHITECTURAL JOURNEY</h2>
+                    <div class="title-underline"></div>
+                    <p class="contact-desc">Whether you are planning a high-end private residence, a penthouse interior, or a commercial development, our team invites you to discuss your vision.</p>
+                    
+                    <div class="contact-details-list">
+                        <div class="contact-item">
+                            <div class="icon-circle"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <h5>MANHATTAN STUDIO</h5>
+                                <p>401 Broadway, Suite 2100, New York, NY 10013</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="icon-circle"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <h5>DIRECT TELEPHONE</h5>
+                                <p><a href="tel:2123894020">(212) 389-4020</a></p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="icon-circle"><i class="fa-solid fa-envelope"></i></div>
+                            <div>
+                                <h5>EMAIL INQUIRIES</h5>
+                                <p><a href="mailto:info@jhg.com">info@jhg.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-col">
+                    <form class="contact-form" id="contactForm" onsubmit="handleFormSubmit(event)">
+                        <h3>SEND AN INQUIRY</h3>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">YOUR NAME *</label>
+                                <input type="text" id="name" required placeholder="Jane Doe">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">EMAIL ADDRESS *</label>
+                                <input type="email" id="email" required placeholder="jane@example.com">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone">PHONE NUMBER</label>
+                                <input type="tel" id="phone" placeholder="(212) 000-0000">
+                            </div>
+                            <div class="form-group">
+                                <label for="projectType">PROJECT TYPE</label>
+                                <select id="projectType">
+                                    <option value="Residential">Residential Architecture</option>
+                                    <option value="Interior Design">Interior Design & Loft</option>
+                                    <option value="Commercial">Commercial / Retail</option>
+                                    <option value="New Building">New Building Construction</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">PROJECT DETAILS & LOCATION *</label>
+                            <textarea id="message" rows="4" required placeholder="Tell us about your project scope, location, and preferred timeline..."></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">SUBMIT INQUIRY <i class="fa-solid fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (Matching Image 1 Styling) -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h2 class="footer-logo">JHG</h2>
+                <p>ARCHITECTURE AND INTERIOR DESIGN</p>
+            </div>
+            
+            <div class="footer-nav">
+                <a href="#home">HOME</a>
+                <a href="#projects">PROJECTS</a>
+                <a href="#about">ABOUT</a>
+                <a href="#testimonials">CLIENT REVIEWS</a>
+                <a href="#media">MEDIA</a>
+                <a href="#contact">CONTACT</a>
+            </div>
+
+            <div class="footer-bottom">
+                <span class="copyright">© JHG / ALL RIGHTS RESERVED.</span>
+                <span class="phone">(212) 389-4020</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Detailed Project View Modal (Full Interactive Project Showcase) -->
+    <div class="project-modal" id="projectModal">
+        <div class="modal-content-wrapper">
+            <button class="close-modal-btn" id="closeProjectModal" aria-label="Close Project Modal">&times;</button>
+            <div class="modal-body" id="projectModalBody">
+                <!-- Dynamically injected via app.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- News Reader Modal -->
+    <div class="news-modal" id="newsModal">
+        <div class="news-modal-wrapper">
+            <button class="close-modal-btn" id="closeNewsModal" aria-label="Close News Modal">&times;</button>
+            <div class="news-modal-body" id="newsModalBody">
+                <!-- Dynamically injected via app.js -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast-notification" id="toast">
+        <i class="fa-solid fa-circle-check"></i> <span id="toastMessage">Inquiry sent successfully!</span>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
