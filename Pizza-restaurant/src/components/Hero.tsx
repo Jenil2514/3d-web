@@ -1,45 +1,84 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { motion } from 'motion/react';
 import { Star, Flame, Sparkles, ArrowRight, Truck, Award } from 'lucide-react';
+import {
+  initFramePreloader,
+  getCachedImage,
+  getNearestCachedImage,
+  subscribeFrameLoaded,
+  TOTAL_FRAME_COUNT,
+  FRAME_PATHS
+} from '../utils/framePreloader';
 
 interface HeroProps {
   onQuickOrder: () => void;
 }
 
-const TOTAL_FRAMES = 245;
-const FRAME_STEP = 2;
-
 export const Hero: React.FC<HeroProps> = ({ onQuickOrder }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [frameIndex, setFrameIndex] = useState(0);
+  const frameIndexRef = useRef(0);
   const [isVisible, setIsVisible] = useState(true);
   const [translateY, setTranslateY] = useState(0);
 
-  // Generate array of optimized webp frame paths for desktop 3D animation
-  const imagePaths = useRef<string[]>([]);
-  if (imagePaths.current.length === 0) {
-    for (let i = 1; i <= TOTAL_FRAMES; i += FRAME_STEP) {
-      const paddedIndex = String(i).padStart(3, '0');
-      imagePaths.current.push(`/pizza-frames/ezgif-frame-${paddedIndex}.webp`);
-    }
-  }
+  // Draw target frame onto canvas with cover aspect ratio and HiDPI scaling
+  const drawCanvasFrame = useCallback((idx: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-  // Pre-load images progressively in batches to avoid overwhelming Chrome network queue
-  useEffect(() => {
-    let index = 0;
-    const paths = imagePaths.current;
-    const loadBatch = () => {
-      const batchSize = 10;
-      for (let i = 0; i < batchSize && index < paths.length; i++, index++) {
-        const img = new Image();
-        img.src = paths[index];
-      }
-      if (index < paths.length) {
-        setTimeout(loadBatch, 60);
-      }
-    };
-    loadBatch();
+    const img = getCachedImage(idx) || getNearestCachedImage(idx);
+    if (!img || !img.complete || img.naturalWidth === 0) return;
+
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+
+    const dpr = window.devicePixelRatio || 1;
+    const width = Math.floor(rect.width * dpr);
+    const height = Math.floor(rect.height * dpr);
+
+    if (canvas.width !== width || canvas.height !== height) {
+      canvas.width = width;
+      canvas.height = height;
+    }
+
+    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const canvasRatio = width / height;
+
+    let drawWidth = width;
+    let drawHeight = height;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    if (canvasRatio > imgRatio) {
+      drawWidth = width;
+      drawHeight = width / imgRatio;
+      offsetY = (height - drawHeight) / 2;
+    } else {
+      drawHeight = height;
+      drawWidth = height * imgRatio;
+      offsetX = (width - drawWidth) / 2;
+    }
+
+    ctx.clearRect(0, 0, width, height);
+    ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   }, []);
+
+  // Initialize preloader and subscribe to newly loaded frames
+  useEffect(() => {
+    initFramePreloader();
+    drawCanvasFrame(frameIndexRef.current);
+
+    const unsubscribe = subscribeFrameLoaded(() => {
+      drawCanvasFrame(frameIndexRef.current);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [drawCanvasFrame]);
 
   // Desktop scroll listener
   useEffect(() => {
@@ -64,25 +103,31 @@ export const Hero: React.FC<HeroProps> = ({ onQuickOrder }) => {
       }
       setTranslateY(y);
 
-      const totalFrames = imagePaths.current.length;
-      const index = Math.floor(progress * (totalFrames - 1));
+      const index = Math.floor(progress * (TOTAL_FRAME_COUNT - 1));
+      frameIndexRef.current = index;
       setFrameIndex(index);
+      drawCanvasFrame(index);
+    };
+
+    const handleResize = () => {
+      handleScroll();
+      drawCanvasFrame(frameIndexRef.current);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll);
+    window.addEventListener('resize', handleResize);
     handleScroll();
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [drawCanvasFrame]);
 
   // Static pizza images for mobile slides
-  const mobileSlide1Image = imagePaths.current[0] || '/pizza-frames/ezgif-frame-001.webp';
-  const mobileSlide2Image = imagePaths.current[Math.floor(imagePaths.current.length * 0.45)] || '/pizza-frames/ezgif-frame-100.webp';
-  const mobileSlide3Image = imagePaths.current[imagePaths.current.length - 1] || '/pizza-frames/ezgif-frame-245.webp';
+  const mobileSlide1Image = FRAME_PATHS[0] || '/pizza-frames/ezgif-frame-001.webp';
+  const mobileSlide2Image = FRAME_PATHS[Math.floor(TOTAL_FRAME_COUNT * 0.45)] || '/pizza-frames/ezgif-frame-100.webp';
+  const mobileSlide3Image = FRAME_PATHS[TOTAL_FRAME_COUNT - 1] || '/pizza-frames/ezgif-frame-245.webp';
 
   return (
     <>
@@ -320,14 +365,14 @@ export const Hero: React.FC<HeroProps> = ({ onQuickOrder }) => {
 
         {/* Fixed desktop canvas */}
         <div
-          className={`fixed top-0 left-0 w-full h-screen overflow-hidden pointer-events-none select-none z-0 flex items-center justify-center transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'
-            }`}
+          className={`fixed top-0 left-0 w-full h-screen overflow-hidden pointer-events-none select-none z-0 flex items-center justify-center transition-opacity duration-300 ${
+            isVisible ? 'opacity-100' : 'opacity-0'
+          }`}
           style={{ transform: `translateY(${translateY}px)` }}
         >
-          <img
-            src={imagePaths.current[frameIndex] || imagePaths.current[0]}
+          <canvas
+            ref={canvasRef}
             className="w-full h-full object-cover object-center"
-            alt="Pizza Scroll Animation"
           />
           <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
         </div>
