@@ -664,8 +664,10 @@ function setupScroll3dAnimation() {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const loader = document.getElementById('scroll3dLoader');
-    const loaderText = document.getElementById('loaderText');
     
+    // 1. Hide loader immediately so user is never blocked by a loading indicator
+    if (loader) loader.style.display = 'none';
+
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
     }
@@ -679,9 +681,10 @@ function setupScroll3dAnimation() {
     }
 
     const totalFrames = frameFiles.length;
-    const images = [];
-    let loadedCount = 0;
+    const images = new Array(totalFrames);
+    const loadingStatus = new Uint8Array(totalFrames); // 0 = unrequested, 1 = loading, 2 = loaded
     const currentFrameObj = { frame: 0 };
+    let hasRenderedFirstFrame = false;
 
     // High-DPI Canvas Cover Sizing for Ultra-Sharp Display
     function resizeCanvas() {
@@ -693,11 +696,27 @@ function setupScroll3dAnimation() {
         renderFrame(currentFrameObj.frame);
     }
 
+    // Helper to get nearest available loaded image so canvas never flickers black
+    function getBestAvailableImage(targetIndex) {
+        if (images[targetIndex] && loadingStatus[targetIndex] === 2) {
+            return images[targetIndex];
+        }
+        // Look backward for nearest loaded frame
+        for (let i = targetIndex - 1; i >= 0; i--) {
+            if (images[i] && loadingStatus[i] === 2) return images[i];
+        }
+        // Look forward for nearest loaded frame
+        for (let i = targetIndex + 1; i < totalFrames; i++) {
+            if (images[i] && loadingStatus[i] === 2) return images[i];
+        }
+        return null;
+    }
+
     // Render Frame onto Canvas with High Quality & High-DPI Support
     function renderFrame(index) {
         const frameIndex = Math.min(Math.max(Math.floor(index), 0), totalFrames - 1);
-        const img = images[frameIndex];
-        if (!img || !img.complete) return;
+        const img = getBestAvailableImage(frameIndex);
+        if (!img) return;
 
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
@@ -723,42 +742,70 @@ function setupScroll3dAnimation() {
         ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     }
 
-    // Preload WebP images asynchronously into memory
-    frameFiles.forEach((src, idx) => {
+    // Fetch individual frame (caches to prevent repeat fetching)
+    function fetchFrame(index) {
+        if (index < 0 || index >= totalFrames) return;
+        if (loadingStatus[index] !== 0) return; // Already fetching or loaded
+
+        loadingStatus[index] = 1; // Mark as loading
         const img = new Image();
-        img.src = src;
         img.onload = () => {
-            loadedCount++;
-            const pct = Math.round((loadedCount / totalFrames) * 100);
-            if (loaderText) loaderText.textContent = `Preloading 3D Frame Sequence (${pct}%)`;
+            loadingStatus[index] = 2; // Mark as loaded
+            images[index] = img;
 
-            if (idx === 0) {
-                resizeCanvas(); // Render frame 1 immediately
-            }
-
-            if (loadedCount === totalFrames) {
-                if (loader) loader.style.opacity = '0';
-                setTimeout(() => { if (loader) loader.style.display = 'none'; }, 600);
-                initScrollTrigger();
+            if (!hasRenderedFirstFrame || index === currentFrameObj.frame) {
+                hasRenderedFirstFrame = true;
+                resizeCanvas();
+            } else {
+                renderFrame(currentFrameObj.frame);
             }
         };
         img.onerror = () => {
-            loadedCount++;
-            if (loadedCount === totalFrames) {
-                if (loader) loader.style.display = 'none';
-                initScrollTrigger();
-            }
+            loadingStatus[index] = 0; // Reset on error
         };
-        images.push(img);
-    });
+        img.src = frameFiles[index];
+    }
+
+    // Stage 1: Fetch initial 60 frames (0..59) immediately on page land without blocking
+    const initialBatchSize = Math.min(60, totalFrames);
+    for (let i = 0; i < initialBatchSize; i++) {
+        fetchFrame(i);
+    }
+
+    // Stage 2: Fetch remaining frames (60..totalFrames-1) ONLY when user reaches section (happens once)
+    let remainingFetched = false;
+    function fetchRemainingFrames() {
+        if (remainingFetched) return;
+        remainingFetched = true;
+
+        for (let i = initialBatchSize; i < totalFrames; i++) {
+            fetchFrame(i);
+        }
+    }
+
+    // IntersectionObserver to detect when user reaches section
+    const section = document.getElementById('scroll-3d');
+    if (section && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    fetchRemainingFrames();
+                    observer.disconnect();
+                }
+            });
+        }, { rootMargin: '300px 0px 300px 0px' });
+        observer.observe(section);
+    }
 
     window.addEventListener('resize', resizeCanvas);
+
+    // Initialize ScrollTrigger immediately on DOM ready
+    initScrollTrigger();
 
     // Setup ScrollTrigger Timeline
     function initScrollTrigger() {
         if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-        const section = document.getElementById('scroll-3d');
         const card1 = document.getElementById('storyCard1');
         const card2 = document.getElementById('storyCard2');
         const card3 = document.getElementById('storyCard3');
@@ -771,6 +818,11 @@ function setupScroll3dAnimation() {
                 scrub: 0.3,
                 invalidateOnRefresh: true,
                 onUpdate: (self) => {
+                    // Backup trigger for fetching remaining frames when scrub starts
+                    if (self.progress > 0) {
+                        fetchRemainingFrames();
+                    }
+
                     const progress = self.progress;
                     
                     if (card1) {

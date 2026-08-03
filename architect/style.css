@@ -730,6 +730,7 @@ button {
 
 /* Preloader Indicator */
 .scroll-3d-loader {
+    display: none !important;
     position: absolute;
     bottom: 2.5rem;
     left: 50%;
@@ -739,7 +740,6 @@ button {
     border: 1px solid rgba(197, 160, 89, 0.4);
     padding: 0.6rem 1.4rem;
     border-radius: 30px;
-    display: flex;
     align-items: center;
     gap: 0.8rem;
     font-size: 0.8rem;
