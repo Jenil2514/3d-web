@@ -420,6 +420,10 @@ function closeModal(modalId) {
     }
 }
 
+// Expose modal functions globally for inline HTML event handlers
+window.openProjectDetail = openProjectDetail;
+window.closeModal = closeModal;
+
 // --------------------------------------------------------------------------
 // 5. TESTIMONIAL SLIDER LOGIC
 // --------------------------------------------------------------------------
@@ -461,6 +465,8 @@ function openNewsModal(newsId) {
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
 }
+
+window.openNewsModal = openNewsModal;
 
 // --------------------------------------------------------------------------
 // 7. SEARCH MODAL SYSTEM
@@ -578,6 +584,8 @@ function handleFormSubmit(e) {
     const form = document.getElementById('contactForm');
     if (form) form.reset();
 }
+
+window.handleFormSubmit = handleFormSubmit;
 
 // --------------------------------------------------------------------------
 // 10. INITIALIZATION
